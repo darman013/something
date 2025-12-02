@@ -1,54 +1,73 @@
 <!DOCTYPE html>
-<html>
-<body style="background-color:black; text-align:center">
+<html lang="be">
+<head>
+  <meta charset="UTF-8">
+  <title>Свечка за ЗБС</title>
+  <style>
+    body {
+      background-color: black;
+      text-align: center;
+      font-family: 'Nunito', sans-serif;
+      color: white;
+    }
 
-<div>
-  <h1 style="font-family:nunito; color:white;">Свечка за ЗБС</h1>
-  <h3 style="font-family:nunito; color:white;">
-    Пастаў свечку за РВК, Раду, Сакратарыят ці каго захочаш.
-  </h3>
-</div>
+    button {
+      font-size: 16px;
+      padding: 10px 20px;
+      margin: 10px;
+      cursor: pointer;
+    }
 
-<button type="button" id="btnID">паставіць свечку</button>
+    img {
+      margin-top: 10px;
+      width: 100px;
+      height: auto;
+    }
+  </style>
+</head>
+<body>
 
-<div>
-  <h5 style="font-family:nunito; color:white;">
-    Свечак пастаўлена: <span id="display">0</span>
-  </h5>
-  <img
-    id="image"
-    src="https://i.ibb.co/SYg7nCf/orthodox-church-candles-candles-bulk-wholesale-australia-candella-fabrica-taper-candle-orig.png"
-    hidden
-  >
-</div>
+  <div>
+    <h1>Свечка за ЗБС</h1>
+    <h3>Пастаў свечку за РВК, Раду, Сакратарыят ці каго захочаш.</h3>
+  </div>
 
-<script>
-  const btn = document.getElementById("btnID");
-  const disp = document.getElementById("display");
-  const img = document.getElementById("image");
+  <button type="button" id="btnID">паставіць свечку</button>
 
-  async function getCount() {
-    const r = await fetch("/api/counter");
-    const data = await r.json();
-    disp.textContent = data.count;
-  }
+  <div>
+    <h5>
+      Свечак пастаўлена: <span id="display">0</span>
+    </h5>
+    <img
+      id="image"
+      src="https://i.ibb.co/SYg7nCf/orthodox-church-candles-candles-bulk-wholesale-australia-candella-fabrica-taper-candle-orig.png"
+      hidden
+      alt="Свечка"
+    >
+  </div>
 
-  async function increment() {
-    const r = await fetch("/api/counter", {
-      method: "POST"
+  <script>
+    const btn = document.getElementById("btnID");
+    const disp = document.getElementById("display");
+    const img = document.getElementById("image");
+
+    // Load count from localStorage or start at 0
+    let count = Number(localStorage.getItem("count") || 0);
+
+    function updateDisplay() {
+      disp.textContent = count;
+      img.hidden = count === 0; // hide candle if count is 0
+    }
+
+    btn.addEventListener("click", () => {
+      count++;
+      localStorage.setItem("count", count); // persist count
+      updateDisplay();
     });
 
-    const data = await r.json();
-    disp.textContent = data.count;
-
-    img.hidden = false;
-  }
-
-  btn.addEventListener("click", increment);
-
-  // Load initial count
-  getCount();
-</script>
+    // Initialize display
+    updateDisplay();
+  </script>
 
 </body>
 </html>
