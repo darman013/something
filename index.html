@@ -1,40 +1,57 @@
 <!DOCTYPE html>
 <html>
-
-<body style="background-color:black; text-align: center">
+<body style="background-color:black; text-align:center">
 
 <div>
-	<h1 style="font-family:nunito; color:white;">Свечка за ЗБС</h1>
-	<h3 style="font-family:nunito; color:white;">Пастаў свечку за РВК, Раду, Сакратарыят ці каго захочаш.</h3>
+  <h1 style="font-family:nunito; color:white;">Свечка за ЗБС</h1>
+  <h3 style="font-family:nunito; color:white;">
+    Пастаў свечку за РВК, Раду, Сакратарыят ці каго захочаш.
+  </h3>
 </div>
 
-	<button type="button" onclick="show()" id="btnID">паставіць свечку
-</button>
+<button type="button" id="btnID">паставіць свечку</button>
 
 <div>
-	<h5 style="font-family:nunito; color:white;">Свечак пастаўлена: <span id="display">0</span></h5>
-	<img id="image" src="https://i.ibb.co/SYg7nCf/orthodox-church-candles-candles-bulk-wholesale-australia-candella-fabrica-taper-candle-orig.png" hidden>
+  <h5 style="font-family:nunito; color:white;">
+    Свечак пастаўлена: <span id="display">0</span>
+  </h5>
+  <img
+    id="image"
+    src="https://i.ibb.co/SYg7nCf/orthodox-church-candles-candles-bulk-wholesale-australia-candella-fabrica-taper-candle-orig.png"
+    hidden
+  >
 </div>
 
 <script>
-	const showImageButton = document.getElementById("btnID");
-	const myImage = document.getElementById("image");
-		showImageButton.addEventListener("click", () => {
-		myImage.hidden = myImage.visible;
-		});
+  const btn = document.getElementById("btnID");
+  const disp = document.getElementById("display");
+  const img = document.getElementById("image");
+
+  async function getCount() {
+    const r = await fetch("/api/counter");
+    const data = await r.json();
+    disp.textContent = data.count;
+  }
+
+  async function increment() {
+    const r = await fetch("/api/counter", {
+      method: "POST"
+    });
+
+    const data = await r.json();
+    disp.textContent = data.count;
+
+    img.hidden = false;
+  }
+
+  btn.addEventListener("click", increment);
+
+  // Load initial count
+  getCount();
 </script>
 
-<script>
-	let count = 0;
-	let btn = document.getElementById("btnID");
-	let disp = document.getElementById("display");
-        
-		btn.onclick = function () {
-			count++;
-		disp.innerHTML = count;
-		}
-</script>
 </body>
-
 </html>
+
+
 
