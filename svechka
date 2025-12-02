@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="be">
+<head>
+<meta charset="UTF-8">
+<title>Свечка за ЗБС</title>
+<style>
+body { background-color: black; text-align: center; font-family: 'Nunito', sans-serif; color: white; }
+button { font-size: 16px; padding: 10px 20px; margin: 10px; cursor: pointer; }
+.candles-container { margin-top: 10px; }
+.candle-wrapper { display: inline-block; margin: 5px; text-align: center; vertical-align: top; }
+.candle { width: 40px; height: auto; display: block; margin: 0 auto; }
+.message { font-size: 12px; color: #ffd700; word-break: break-word; max-width: 60px; }
+input[type="text"] { padding: 5px; font-size: 14px; width: 200px; }
+</style>
+</head>
+<body>
+<div>
+<h1>Свечка за ЗБС</h1>
+<h3>Пастаў свечку за РВК, Раду, Сакратарыят ці каго захочаш.</h3>
+</div>
+<div>
+<input type="text" id="messageInput" placeholder="Напішыце паведамленне">
+<button type="button" id="btnID">паставіць свечку</button>
+</div>
+<div>
+<h5>Свечак пастаўлена: <span id="display">0</span></h5>
+<div class="candles-container" id="candles"></div>
+</div>
+
+<script>
+const API_URL = "https://svechka.y-rvk.workers.dev";
+
+const btn = document.getElementById("btnID");
+const disp = document.getElementById("display");
+const candlesContainer = document.getElementById("candles");
+const messageInput = document.getElementById("messageInput");
+
+async function fetchData() {
+    const res = await fetch(API_URL);
+    return res.json();
+}
+
+function renderCandles(candleData) {
+    candlesContainer.innerHTML = "";
+    candleData.forEach(data => {
+        const wrapper = document.createElement("div");
+        wrapper.className = "candle-wrapper";
+
+        const candle = document.createElement("img");
+        candle.src = "https://i.ibb.co/SYg7nCf/orthodox-church-candles-candles-bulk-wholesale-australia-candella-fabrica-taper-candle-orig.png";
+        candle.className = "candle";
+
+        const msg = document.createElement("div");
+        msg.className = "message";
+        msg.textContent = data.message;
+
+        wrapper.appendChild(candle);
+        wrapper.appendChild(msg);
+        candlesContainer.appendChild(wrapper);
+    });
+}
+
+async function init() {
+    const data = await fetchData();
+    disp.textContent = data.count;
+    renderCandles(data.candleData);
+}
+
+btn.addEventListener("click", async () => {
+    const msgText = messageInput.value.trim();
+    if (!msgText) return;
+
+    const res = await fetch(API_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: msgText })
+    });
+    const data = await res.json();
+
+    disp.textContent = data.count;
+    renderCandles(data.candleData);
+    messageInput.value = "";
+});
+
+init();
+</script>
+</body>
+</html>
