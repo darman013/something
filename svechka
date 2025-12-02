@@ -16,10 +16,10 @@ input[type="text"] { padding: 5px; font-size: 14px; width: 200px; }
 <body>
 <div>
 <h1>Свечка за ЗБС</h1>
-<h3>Пастаў свечку за РВК, Раду, Сакратарыят ці каго захочаш.</h3>
+<h3>Пастаў свечку за РВК, Раду, Сакратарыят ці каго заўгодна.</h3>
 </div>
 <div>
-<input type="text" id="messageInput" placeholder="Напішыце паведамленне">
+<input type="text" id="messageInput" placeholder="Твой месэдж">
 <button type="button" id="btnID">паставіць свечку</button>
 </div>
 <div>
