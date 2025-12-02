@@ -18,10 +18,15 @@
       cursor: pointer;
     }
 
-    img {
+    .candles-container {
       margin-top: 10px;
-      width: 100px;
+    }
+
+    .candle {
+      width: 40px;  /* small candle */
       height: auto;
+      margin: 2px;
+      display: inline-block;
     }
   </style>
 </head>
@@ -38,33 +43,50 @@
     <h5>
       Свечак пастаўлена: <span id="display">0</span>
     </h5>
-    <img
-      id="image"
-      src="https://i.ibb.co/SYg7nCf/orthodox-church-candles-candles-bulk-wholesale-australia-candella-fabrica-taper-candle-orig.png"
-      hidden
-      alt="Свечка"
-    >
+    <div class="candles-container" id="candles"></div>
   </div>
 
-<script>
-  const btn = document.getElementById("btnID");
-  const disp = document.getElementById("display");
-  const img = document.getElementById("image");
+  <script>
+    const btn = document.getElementById("btnID");
+    const disp = document.getElementById("display");
+    const candlesContainer = document.getElementById("candles");
 
-  // Load count from localStorage or start at 0
-  let count = Number(localStorage.getItem("count") || 0);
+    // Load count from localStorage or start at 0
+    let count = Number(localStorage.getItem("count") || 0);
 
-  // Initialize display without showing the candle
-  disp.textContent = count;
-  img.hidden = true; // always hidden on page load
+    // Load candle count from localStorage or start at 0
+    let candleCount = Number(localStorage.getItem("candleCount") || 0);
 
-  btn.addEventListener("click", () => {
-    count++;
-    localStorage.setItem("count", count); // persist count
+    // Function to render candles
+    function renderCandles(num) {
+      candlesContainer.innerHTML = ""; // clear existing candles
+      for (let i = 0; i < num; i++) {
+        const candle = document.createElement("img");
+        candle.src = "https://i.ibb.co/SYg7nCf/orthodox-church-candles-candles-bulk-wholesale-australia-candella-fabrica-taper-candle-orig.png";
+        candle.className = "candle";
+        candlesContainer.appendChild(candle);
+      }
+    }
+
+    // Initialize display and candles
     disp.textContent = count;
-    img.hidden = false; // show candle when button is clicked
-  });
-</script>
+    renderCandles(candleCount);
+
+    btn.addEventListener("click", () => {
+      count++;
+      candleCount++;
+      localStorage.setItem("count", count);
+      localStorage.setItem("candleCount", candleCount);
+
+      disp.textContent = count;
+
+      // Add new candle
+      const candle = document.createElement("img");
+      candle.src = "https://i.ibb.co/SYg7nCf/orthodox-church-candles-candles-bulk-wholesale-australia-candella-fabrica-taper-candle-orig.png";
+      candle.className = "candle";
+      candlesContainer.appendChild(candle);
+    });
+  </script>
 
 </body>
 </html>
