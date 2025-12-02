@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="be">
+<head>
+  <meta charset="UTF-8">
+  <title>Свечка за ЗБС</title>
+  <style>
+    body {
+      background-color: black;
+      text-align: center;
+      font-family: 'Nunito', sans-serif;
+      color: white;
+    }
+
+    button {
+      font-size: 16px;
+      padding: 10px 20px;
+      margin: 10px;
+      cursor: pointer;
+    }
+
+    img {
+      margin-top: 10px;
+      width: 100px;
+      height: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <div>
+    <h1>Свечка за ЗБС</h1>
+    <h3>Пастаў свечку за РВК, Раду, Сакратарыят ці каго захочаш.</h3>
+  </div>
+
+  <button type="button" id="btnID">паставіць свечку</button>
+
+  <div>
+    <h5>
+      Свечак пастаўлена: <span id="display">0</span>
+    </h5>
+    <img
+      id="image"
+      src="https://i.ibb.co/SYg7nCf/orthodox-church-candles-candles-bulk-wholesale-australia-candella-fabrica-taper-candle-orig.png"
+      hidden
+      alt="Свечка"
+    >
+  </div>
+
+  <script>
+    const btn = document.getElementById("btnID");
+    const disp = document.getElementById("display");
+    const img = document.getElementById("image");
+
+    // Load count from localStorage or start at 0
+    let count = Number(localStorage.getItem("count") || 0);
+
+    function updateDisplay() {
+      disp.textContent = count;
+      img.hidden = count === 0; // hide candle if count is 0
+    }
+
+    btn.addEventListener("click", () => {
+      count++;
+      localStorage.setItem("count", count); // persist count
+      updateDisplay();
+    });
+
+    // Initialize display
+    updateDisplay();
+  </script>
+
+</body>
+</html>
