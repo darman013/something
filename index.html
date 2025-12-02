@@ -1,32 +1,39 @@
 <!DOCTYPE html>
 <html>
 
-<body style="background-color:black">
-<center>
-    <div>
+<body style="background-color:black; text-align: center">
+
+<div>
         <h1 style="font-family:nunito; color:white;">Свечка за ЗБС</h1>
         <h3 style="font-family:nunito; color:white;">Пастаў свечку за РВК, Раду, Сакратарыят ці каго захочаш.</h3>
-        <!-- img element without src attribute -->
-        <img id="image" src="" />
-    </div>
-    <button type="button" onclick="show()" id="btnID">
-        паставіць свечку
-    </button>
-    <script>
-        function show() {
-            /* Get image and change value 
-            of src attribute */
-            let image = document.getElementById("image");
-            image.src = "https://i.ibb.co/SYg7nCf/orthodox-church-candles-candles-bulk-wholesale-australia-candella-fabrica-taper-candle-orig.png"
-            document.getElementById("btnID")
-                .style.display = "none";
+<img id="image" src="https://i.ibb.co/SYg7nCf/orthodox-church-candles-candles-bulk-wholesale-australia-candella-fabrica-taper-candle-orig.png" hidden>
+</div>
+
+    <button type="button" onclick="show()" id="btnID">паставіць свечку
+</button>
+
+<div>
+  <h5 style="font-family:nunito; color:white;">Свечак пастаўлена: <span id="display">0</span></h5>
+</div>
+
+<script>
+        const showImageButton = document.getElementById("btnID");
+      const myImage = document.getElementById("image");
+      showImageButton.addEventListener("click", () => {
+         myImage.hidden = myImage.visible;
+      });
+</script>
+
+<script>
+        let count = 0;
+        let disp = document.getElementById("display");
+        let btn = document.getElementById("btnID");
+        
+        btn.onclick = function () {
+                    count++;
+        disp.innerHTML = count;
         }
-    </script>
-</center>
+	</script>
 </body>
 
-
 </html>
-
-
-
